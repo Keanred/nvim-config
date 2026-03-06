@@ -14,7 +14,7 @@ return {
             vim.wo.number = true
             vim.wo.rnu = true
             SetColorscheme()
-        end)
+        end, { desc = "Enable focused Zen mode" })
 
 
         vim.keymap.set("n", "<leader>zZ", function()
@@ -30,7 +30,7 @@ return {
             vim.wo.rnu = false
             vim.opt.colorcolumn = "0"
             SetColorscheme()
-        end)
+        end, { desc = "Enable minimal Zen mode" })
     end
 }
 
