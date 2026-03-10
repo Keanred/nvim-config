@@ -12,7 +12,8 @@ return {
 
     {
         "nvim-lua/plenary.nvim",
-        name = "plenary"
+        name = "plenary",
+        tag = "v0.1.4",
     },
     "eandrju/cellular-automaton.nvim",
 }

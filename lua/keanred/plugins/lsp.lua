@@ -1,16 +1,17 @@
 return {
     "neovim/nvim-lspconfig",
+    tag = "v2.6.0",
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        { "williamboman/mason.nvim", tag = "v2.2.1" },
+        { "williamboman/mason-lspconfig.nvim", tag = "v2.1.0" },
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
-        "L3MON4D3/LuaSnip",
+        { "L3MON4D3/LuaSnip", tag = "v2.4.1" },
         "saadparwaiz1/cmp_luasnip",
-        "j-hui/fidget.nvim",
+        { "j-hui/fidget.nvim", tag = "v1.6.1" },
     },
 
     config = function()

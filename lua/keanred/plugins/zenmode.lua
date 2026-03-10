@@ -1,6 +1,7 @@
 
 return {
     "folke/zen-mode.nvim",
+    tag = "v1.4.1",
     config = function()
         vim.keymap.set("n", "<leader>zz", function()
             require("zen-mode").setup {

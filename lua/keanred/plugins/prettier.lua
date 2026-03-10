@@ -1,6 +1,7 @@
 return {
    {
         "sbdchd/neoformat",
+        tag = "v0.4.0",
         config = function()
           vim.g.neoformat_try_node_exe = 1
           vim.g.neoformat_only_msg_on_error = 1

@@ -1,6 +1,7 @@
 return {
     {
         "folke/trouble.nvim",
+        tag = "v3.7.1",
         config = function()
             require("trouble").setup({
                 icons = true,
