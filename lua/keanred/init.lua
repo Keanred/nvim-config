@@ -1,6 +1,7 @@
 require("keanred.set")
 require("keanred.remap")
 require("keanred.lazy")
+require("keanred.fterm").setup()
 
 local augroup = vim.api.nvim_create_augroup
 local KeanredGroup = augroup('Keanred', {})
