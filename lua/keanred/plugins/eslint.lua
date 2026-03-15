@@ -5,8 +5,8 @@ return {
         config = function()
       require("nvim-eslint").setup({
         settings = {
-          validate = "on",
-          format = false, -- Let Prettier handle formatting
+          validate = "off", -- Disable ESLint linting
+          format = true, -- Enable ESLint formatting
           run = "onSave",
         },
       })
