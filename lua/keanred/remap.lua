@@ -22,7 +22,10 @@ vim.keymap.set({"n", "v"}, "<leader>d", [["_d]], { desc = "Delete without yankin
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit insert mode" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Ex mode" })
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer" })
+vim.keymap.set("n", "<leader>f", function()
+    local eslint = require("nvim-eslint")
+    eslint.format()
+end, { desc = "Format buffer with ESLint" })
 
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
