@@ -8,6 +8,14 @@ local state = {
   }
 }
 
+local function get_terminal_job_id(buf)
+  if not (buf and vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal") then
+    return nil
+  end
+
+  return vim.b[buf].terminal_job_id
+end
+
 local function create_floating_window(opts)
   opts = opts or {}
   local width = opts.width or math.floor(vim.o.columns * 0.8)
@@ -46,11 +54,16 @@ local function create_floating_window(opts)
     vim.cmd("startinsert")
   end
 
-  -- Map <C-c> in terminal mode to close the floating window (buffer local)
-  vim.api.nvim_buf_set_keymap(buf, 't', '<C-c>', '<C-\\><C-n>:lua require"keanred.fterm"._close()<CR>', { noremap = true, silent = true })
+  vim.keymap.set("t", "<C-c>", function()
+    require("keanred.fterm").interrupt()
+  end, { buffer = buf, silent = true, desc = "Interrupt terminal process" })
 
-  -- Autocmd to reset state if buffer or window is closed
-  vim.api.nvim_create_autocmd({"BufWipeout", "WinClosed"}, {
+  vim.keymap.set("t", "<Esc><Esc>", function()
+    require("keanred.fterm")._close()
+  end, { buffer = buf, silent = true, desc = "Hide floating terminal" })
+
+  -- Autocmd to reset state only if the buffer itself is destroyed
+  vim.api.nvim_create_autocmd("BufWipeout", {
     buffer = buf,
     callback = function()
       state.floating = { buf = -1, win = -1 }
@@ -62,11 +75,22 @@ local function create_floating_window(opts)
 end
 
 
+function M.interrupt()
+  local job_id = get_terminal_job_id(state.floating.buf)
+  if not job_id then
+    return
+  end
+
+  vim.api.nvim_chan_send(job_id, "\003")
+end
+
+
 function M.toggle()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     state.floating = create_floating_window { buf = state.floating.buf }
   else
     vim.api.nvim_win_hide(state.floating.win)
+    state.floating.win = -1
   end
 end
 
@@ -74,12 +98,16 @@ end
 function M._close()
   if vim.api.nvim_win_is_valid(state.floating.win) then
     vim.api.nvim_win_hide(state.floating.win)
+    state.floating.win = -1
   end
 end
 
 
 function M.setup()
   vim.keymap.set("n", "<leader>tft", ":Floaterminal<CR>", { desc = "Toggle Floaterminal" })
+  vim.keymap.set("n", "<leader>tfc", function()
+    require("keanred.fterm").interrupt()
+  end, { desc = "Interrupt Floaterminal process" })
   vim.api.nvim_create_user_command("Floaterminal", M.toggle, {})
 end
 
