@@ -31,6 +31,7 @@ return {
                 "rust_analyzer",
                 "gopls",
                 "ts_ls",
+                "eslint",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -68,6 +69,28 @@ return {
                             }
                         }
                     }
+                end,
+                ["eslint"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.eslint.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            codeAction = {
+                                disableRuleComment = {
+                                    location = "separateLine"
+                                }
+                            },
+                            codeActionOnSave = {
+                                enable = true,
+                                mode = "all"
+                            },
+                            format = true,
+                            quiet = false,
+                            rulesCustomizations = {},
+                            run = "onSave",
+                            validate = "on"
+                        }
+                    })
                 end,
             }
         })

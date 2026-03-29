@@ -23,8 +23,14 @@ vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit insert mode" })
 
 vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Ex mode" })
 vim.keymap.set("n", "<leader>f", function()
+    local ok, conform = pcall(require, "conform")
+    if ok then
+        conform.format({ async = true, lsp_fallback = true })
+        return
+    end
+
     vim.lsp.buf.format()
-end, { desc = "Format buffer with ESLint/LSP" })
+end, { desc = "Format buffer" })
 
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
