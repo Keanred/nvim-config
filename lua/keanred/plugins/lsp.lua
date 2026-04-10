@@ -74,6 +74,15 @@ return {
                     local lspconfig = require("lspconfig")
                     lspconfig.eslint.setup({
                         capabilities = capabilities,
+                        filetypes = {
+                            "javascript",
+                            "javascriptreact",
+                            "typescript",
+                            "typescriptreact",
+                            "vue",
+                            "svelte",
+                            "astro",
+                        },
                         settings = {
                             codeAction = {
                                 disableRuleComment = {
@@ -90,6 +99,25 @@ return {
                             run = "onSave",
                             validate = "on"
                         }
+                    })
+                end,
+                ["gopls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.gopls.setup({
+                        capabilities = capabilities,
+                        filetypes = { "go", "gomod" },
+                    })
+                end,
+                ["ts_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.ts_ls.setup({
+                        capabilities = capabilities,
+                        filetypes = {
+                            "javascript",
+                            "javascriptreact",
+                            "typescript",
+                            "typescriptreact",
+                        },
                     })
                 end,
             }

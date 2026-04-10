@@ -1,5 +1,11 @@
 vim.opt.guicursor = ""
 
+-- Disable optional providers we do not use to avoid noisy health warnings.
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -29,6 +35,10 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+if vim.fn.has("mac") == 1 then
+	vim.opt.clipboard:append("unnamedplus")
+end
 
 function SetColorscheme(name)
 	name = name or "dracula"
