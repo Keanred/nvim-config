@@ -11,6 +11,7 @@ return {
         wk.setup({})
 
         wk.add({
+            { "<leader>a", group = "ai/claude" },
             { "<leader>f", group = "format" },
             { "<leader>p", group = "project/search" },
             { "<leader>v", group = "vim" },
